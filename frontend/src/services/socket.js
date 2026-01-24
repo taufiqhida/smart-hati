@@ -7,7 +7,7 @@ export const initSocket = (token) => {
         socket.disconnect()
     }
 
-    socket = io('http://10.152.106.109:6001', {
+    socket = io(import.meta.env.VITE_API_URL || 'http://localhost:6001', {
         auth: { token }
     })
 
