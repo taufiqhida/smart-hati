@@ -5,6 +5,8 @@ const prisma = require('./lib/prisma');
 const { initializeSocket } = require('./socket/chatSocket');
 
 const PORT = process.env.PORT || 6001;
+const HOST = process.env.HOST || '0.0.0.0';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 // Create HTTP server
 const server = http.createServer(app);
@@ -12,7 +14,7 @@ const server = http.createServer(app);
 // Initialize Socket.io
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:5173', 'http://localhost:3000'],
+        origin: [FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000'],
         methods: ['GET', 'POST']
     }
 });
@@ -26,14 +28,15 @@ async function main() {
         await prisma.$connect();
         console.log('✅ Database connected successfully');
 
-        server.listen(PORT, () => {
+        server.listen(PORT, HOST, () => {
             console.log(`
 ╔════════════════════════════════════════════════╗
 ║                                                ║
 ║    🩺 SMART HATI API Server                   ║
 ║    Sistem Monitoring Hipertensi Terintegrasi  ║
 ║                                                ║
-║    Server running on: http://localhost:${PORT}   ║
+║    Server running on: http://${HOST}:${PORT}       ║
+║    Frontend URL: ${FRONTEND_URL}
 ║    Socket.io: Enabled                          ║
 ║                                                ║
 ╚════════════════════════════════════════════════╝
