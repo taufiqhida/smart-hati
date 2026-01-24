@@ -25,7 +25,7 @@
           </router-link>
           <router-link to="/monitoring" class="nav-item" :class="{ active: isActive('/monitoring') }">
             <span class="nav-item-icon">📊</span>
-            <span class="nav-item-text">Monitoring</span>
+            <span class="nav-item-text">Histori & Monitoring</span>
           </router-link>
           <router-link to="/lifestyle" class="nav-item" :class="{ active: isActive('/lifestyle') }">
             <span class="nav-item-icon">🥗</span>
@@ -37,6 +37,10 @@
           <router-link to="/recommendations" class="nav-item" :class="{ active: isActive('/recommendations') }">
             <span class="nav-item-icon">📋</span>
             <span class="nav-item-text">Rekomendasi</span>
+          </router-link>
+          <router-link to="/prescriptions" class="nav-item" :class="{ active: isActive('/prescriptions') }">
+            <span class="nav-item-icon">💊</span>
+            <span class="nav-item-text">Resep Saya</span>
           </router-link>
           <router-link to="/chat" class="nav-item" :class="{ active: isActive('/chat') }">
             <span class="nav-item-icon">💬</span>
@@ -84,6 +88,11 @@
           <router-link to="/nurse/patient-assist" class="nav-item" :class="{ active: isActive('/nurse/patient-assist') }">
             <span class="nav-item-icon">👤</span>
             <span class="nav-item-text">Bantu Input Pasien</span>
+          </router-link>
+          <router-link to="/nurse/chat" class="nav-item" :class="{ active: isActive('/nurse/chat') }">
+            <span class="nav-item-icon">💬</span>
+            <span class="nav-item-text">Konsultasi</span>
+            <span v-if="unreadMessages > 0" class="nav-item-badge">{{ unreadMessages }}</span>
           </router-link>
         </div>
       </template>

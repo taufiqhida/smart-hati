@@ -6,7 +6,7 @@
       <div class="page-container">
         <div class="chat-container">
           <!-- Contacts -->
-          <div class="chat-sidebar">
+          <div class="chat-sidebar" :class="{ 'hidden-mobile': selectedContact }">
             <div style="padding: 1rem; border-bottom: 1px solid var(--border-color);">
               <h3 style="font-weight: 600;">💬 Pesan</h3>
             </div>
@@ -37,6 +37,7 @@
             <template v-if="selectedContact">
               <!-- Chat Header -->
               <div style="padding: 1rem; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 0.75rem;">
+                <button class="chat-back-btn" @click="selectedContact = null">←</button>
                 <div class="chat-contact-avatar">
                   {{ getInitials(selectedContact.name) }}
                 </div>

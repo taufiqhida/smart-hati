@@ -12,6 +12,7 @@ import Recommendations from '../views/patient/Recommendations.vue'
 import PatientChat from '../views/patient/Chat.vue'
 import PatientProfile from '../views/patient/Profile.vue'
 import LifestyleInput from '../views/patient/LifestyleInput.vue'
+import Prescriptions from '../views/patient/Prescriptions.vue'
 
 // Doctor Views
 import DoctorDashboard from '../views/doctor/Dashboard.vue'
@@ -23,6 +24,7 @@ import DoctorChat from '../views/doctor/Chat.vue'
 // Nurse Views
 import NurseDashboard from '../views/nurse/Dashboard.vue'
 import NursePatientAssist from '../views/nurse/PatientAssist.vue'
+import NurseChat from '../views/nurse/Chat.vue'
 
 // Admin Views
 import AdminDashboard from '../views/admin/Dashboard.vue'
@@ -83,6 +85,12 @@ const routes = [
         component: LifestyleInput,
         meta: { requiresAuth: true, roles: ['patient'] }
     },
+    {
+        path: '/prescriptions',
+        name: 'Prescriptions',
+        component: Prescriptions,
+        meta: { requiresAuth: true, roles: ['patient'] }
+    },
 
     // Doctor Routes
     {
@@ -127,6 +135,12 @@ const routes = [
         path: '/nurse/patient-assist',
         name: 'NursePatientAssist',
         component: NursePatientAssist,
+        meta: { requiresAuth: true, roles: ['nurse'] }
+    },
+    {
+        path: '/nurse/chat',
+        name: 'NurseChat',
+        component: NurseChat,
         meta: { requiresAuth: true, roles: ['nurse'] }
     },
 

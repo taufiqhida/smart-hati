@@ -1,6 +1,7 @@
 <template>
   <header class="top-header">
     <div class="header-left">
+      <button class="mobile-menu-btn" @click="toggleSidebar">☰</button>
       <h1 class="page-title">{{ title }}</h1>
     </div>
     <div class="header-right">
@@ -37,6 +38,9 @@
       </div>
     </div>
   </header>
+  
+  <!-- Sidebar Overlay for Mobile -->
+  <div v-if="sidebarOpen" class="sidebar-overlay" @click="toggleSidebar"></div>
 </template>
 
 <script setup>
@@ -53,6 +57,16 @@ defineProps({
 const showNotifications = ref(false)
 const notifications = ref([])
 const unreadCount = ref(0)
+const sidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+  sidebarOpen.value = !sidebarOpen.value
+  // Toggle sidebar class on the actual sidebar element
+  const sidebar = document.querySelector('.sidebar')
+  if (sidebar) {
+    sidebar.classList.toggle('open', sidebarOpen.value)
+  }
+}
 
 const getNotifIcon = (type) => {
   const icons = {

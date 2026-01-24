@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'https://public-lemons-shave.loca.lt/api',
+    baseURL: 'http://10.152.106.109:6001/api',
     headers: {
         'Content-Type': 'application/json'
     }

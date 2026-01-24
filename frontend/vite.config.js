@@ -5,6 +5,8 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    host: true,
+    port: 5173,
     allowedHosts: ['.ngrok-free.app', '.ngrok.io', '755c21e1c3ef.ngrok-free.app']
   }
 })
