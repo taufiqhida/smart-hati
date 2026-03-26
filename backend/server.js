@@ -8,13 +8,16 @@ const PORT = process.env.PORT || 6001;
 const HOST = process.env.HOST || '0.0.0.0';
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
+// Support multiple origins from env, e.g. "http://a.com,http://b.com"
+const allowedOrigins = FRONTEND_URL.split(',').map(u => u.trim());
+
 // Create HTTP server
 const server = http.createServer(app);
 
 // Initialize Socket.io
 const io = new Server(server, {
     cors: {
-        origin: [FRONTEND_URL, 'http://localhost:5173', 'http://localhost:3000'],
+        origin: allowedOrigins,
         methods: ['GET', 'POST']
     }
 });

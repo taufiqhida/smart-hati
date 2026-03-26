@@ -79,7 +79,7 @@ exports.createUser = async (req, res) => {
             }
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, parseInt(process.env.BCRYPT_ROUNDS) || 10);
 
         const user = await prisma.user.create({
             data: {

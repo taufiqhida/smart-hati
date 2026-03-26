@@ -1,73 +1,76 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const prisma = require('./lib/prisma');
+
+const ROUNDS = parseInt(process.env.BCRYPT_ROUNDS) || 10;
 
 async function seed() {
     console.log('🌱 Seeding database...');
 
     try {
         // Create Admin
-        const adminPassword = await bcrypt.hash('admin123', 10);
+        const adminPassword = await bcrypt.hash(process.env.SEED_ADMIN_PASSWORD || 'admin123', ROUNDS);
         const admin = await prisma.user.upsert({
-            where: { nik: '1234567890123456' },
+            where: { nik: process.env.SEED_ADMIN_NIK || '1234567890123456' },
             update: {},
             create: {
-                nik: '1234567890123456',
+                nik: process.env.SEED_ADMIN_NIK || '1234567890123456',
                 name: 'Administrator',
-                email: 'admin@smarthati.com',
+                email: process.env.SEED_ADMIN_EMAIL || 'admin@smarthati.com',
                 password: adminPassword,
                 role: 'admin',
-                phone: '08123456789',
+                phone: process.env.SEED_ADMIN_PHONE || '08123456789',
                 gender: 'male'
             }
         });
         console.log('✅ Admin created:', admin.name);
 
         // Create Doctor
-        const doctorPassword = await bcrypt.hash('dokter123', 10);
+        const doctorPassword = await bcrypt.hash(process.env.SEED_DOCTOR_PASSWORD || 'dokter123', ROUNDS);
         const doctor = await prisma.user.upsert({
-            where: { nik: '2234567890123456' },
+            where: { nik: process.env.SEED_DOCTOR_NIK || '2234567890123456' },
             update: {},
             create: {
-                nik: '2234567890123456',
-                name: 'Dr. Budi Hartono, Sp.JP',
-                email: 'dr.budi@smarthati.com',
+                nik: process.env.SEED_DOCTOR_NIK || '2234567890123456',
+                name: process.env.SEED_DOCTOR_NAME || 'Dr. Budi Hartono, Sp.JP',
+                email: process.env.SEED_DOCTOR_EMAIL || 'dr.budi@smarthati.com',
                 password: doctorPassword,
                 role: 'doctor',
-                phone: '08234567890',
+                phone: process.env.SEED_DOCTOR_PHONE || '08234567890',
                 gender: 'male'
             }
         });
         console.log('✅ Doctor created:', doctor.name);
 
         // Create Nurse
-        const nursePassword = await bcrypt.hash('perawat123', 10);
+        const nursePassword = await bcrypt.hash(process.env.SEED_NURSE_PASSWORD || 'perawat123', ROUNDS);
         const nurse = await prisma.user.upsert({
-            where: { nik: '3234567890123456' },
+            where: { nik: process.env.SEED_NURSE_NIK || '3234567890123456' },
             update: {},
             create: {
-                nik: '3234567890123456',
-                name: 'Ns. Siti Rahayu, S.Kep',
-                email: 'siti.rahayu@smarthati.com',
+                nik: process.env.SEED_NURSE_NIK || '3234567890123456',
+                name: process.env.SEED_NURSE_NAME || 'Ns. Siti Rahayu, S.Kep',
+                email: process.env.SEED_NURSE_EMAIL || 'siti.rahayu@smarthati.com',
                 password: nursePassword,
                 role: 'nurse',
-                phone: '08345678901',
+                phone: process.env.SEED_NURSE_PHONE || '08345678901',
                 gender: 'female'
             }
         });
         console.log('✅ Nurse created:', nurse.name);
 
         // Create Patient
-        const patientPassword = await bcrypt.hash('pasien123', 10);
+        const patientPassword = await bcrypt.hash(process.env.SEED_PATIENT_PASSWORD || 'pasien123', ROUNDS);
         const patient = await prisma.user.upsert({
-            where: { nik: '4234567890123456' },
+            where: { nik: process.env.SEED_PATIENT_NIK || '4234567890123456' },
             update: {},
             create: {
-                nik: '4234567890123456',
+                nik: process.env.SEED_PATIENT_NIK || '4234567890123456',
                 name: 'Ahmad Wijaya',
-                email: 'ahmad.wijaya@email.com',
+                email: process.env.SEED_PATIENT_EMAIL || 'ahmad.wijaya@email.com',
                 password: patientPassword,
                 role: 'patient',
-                phone: '08456789012',
+                phone: process.env.SEED_PATIENT_PHONE || '08456789012',
                 birthDate: new Date('1975-05-15'),
                 gender: 'male',
                 address: 'Jl. Merdeka No. 123, Jakarta'
@@ -111,14 +114,12 @@ async function seed() {
         console.log('✅ Patient profile created');
 
         // Create sample blood pressure records
-        const classifications = ['normal', 'prehypertension', 'hypertension_1', 'hypertension_2'];
         const today = new Date();
 
         for (let i = 30; i >= 0; i--) {
             const date = new Date(today);
             date.setDate(date.getDate() - i);
 
-            // Random variation for realistic data
             const systolic = 120 + Math.floor(Math.random() * 40);
             const diastolic = 75 + Math.floor(Math.random() * 25);
 
@@ -213,10 +214,10 @@ async function seed() {
 
         console.log('\n🎉 Database seeding completed!');
         console.log('\n📋 Login credentials:');
-        console.log('   Admin    : NIK: 1234567890123456 | Password: admin123');
-        console.log('   Dokter   : NIK: 2234567890123456 | Password: dokter123');
-        console.log('   Perawat  : NIK: 3234567890123456 | Password: perawat123');
-        console.log('   Pasien   : NIK: 4234567890123456 | Password: pasien123');
+        console.log(`   Admin    : NIK: ${process.env.SEED_ADMIN_NIK || '1234567890123456'} | Password: ${process.env.SEED_ADMIN_PASSWORD || 'admin123'}`);
+        console.log(`   Dokter   : NIK: ${process.env.SEED_DOCTOR_NIK || '2234567890123456'} | Password: ${process.env.SEED_DOCTOR_PASSWORD || 'dokter123'}`);
+        console.log(`   Perawat  : NIK: ${process.env.SEED_NURSE_NIK || '3234567890123456'} | Password: ${process.env.SEED_NURSE_PASSWORD || 'perawat123'}`);
+        console.log(`   Pasien   : NIK: ${process.env.SEED_PATIENT_NIK || '4234567890123456'} | Password: ${process.env.SEED_PATIENT_PASSWORD || 'pasien123'}`);
 
     } catch (error) {
         console.error('❌ Seeding error:', error);
